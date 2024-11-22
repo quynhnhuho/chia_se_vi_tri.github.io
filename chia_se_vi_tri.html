@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia Sẻ Vị Trí Của Bạn</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vị Trí Của Bạn</h1>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            // Kiểm tra xem trình duyệt có hỗ trợ Geolocation không
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    // Tạo bản đồ Google Maps
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 14,
+                        center: userLocation
+                    });
+
+                    // Thêm marker vào bản đồ
+                    var marker = new google.maps.Marker({
+                        position: userLocation,
+                        map: map,
+                        title: "Bạn đang ở đây!"
+                    });
+                }, function() {
+                    alert("Không thể lấy vị trí của bạn.");
+                });
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
+            }
+        }
+
+        // Tải bản đồ Google Maps
+        var script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap';
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+    </script>
+
+</body>
+</html>
+```
